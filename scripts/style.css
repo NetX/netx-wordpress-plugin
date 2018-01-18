@@ -1,0 +1,165 @@
+div.netx-form-target {
+    height: 100%;
+}
+
+form#netx-form {
+    margin: 0;
+    height: 100%;
+}
+
+#category-tree {
+    float: left;
+    width: 20%;
+    height: 100%;
+    border-right: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 1em;
+}
+
+#media-items {
+    float: left;
+    width: 60%;
+    padding: 1em;
+}
+
+.clear-fix {
+    clear: both;
+}
+
+li.netx-tree-node ul.netx-tree-node-child {
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+li.netx-tree-node.collapsed ul.netx-tree-node-child {
+    display: none;
+}
+
+a.netx-tree-node-link {
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+a.netx-tree-node-link.selected {
+    color: #333;
+    font-weight: bold;
+    cursor: inherit;
+}
+
+a.netx-tree-node-link:hover {
+    background-color: #f4f4f4;
+}
+
+a.netx-tree-node-toggle {
+    cursor: pointer;
+    float: left;
+    padding-right: 5px;
+    padding-top: 5px;
+}
+
+span.netx-tree-node-nontoggle {
+    float: left;
+    padding-right: 5px;
+    padding-top: 5px;
+}
+
+p.netx-no-files-found-label {
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    font-size: 125%;
+}
+
+a.describe-toggle-on, a.describe-toggle-off {
+    cursor: pointer;
+    line-height: 70px;
+}
+
+.netx-upload-loading-area .filename {
+    line-height: 70px;
+    text-align: center;
+    font-size: 120%;
+}
+
+.netx-upload-loading-area .media-item .pinkynail {
+    height: 65px;
+    max-height: inherit;
+    max-width: inherit;
+}
+
+.netx-error-form {
+    font-size: 175%;
+    padding: 50px;
+    background-color: white;
+    height: 100%;
+    color: #777;
+    text-align: center;
+}
+
+.netx-spinner {
+  margin: 100px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  text-align: center;
+  
+  -webkit-animation: sk-rotate 2.0s infinite linear;
+  animation: sk-rotate 2.0s infinite linear;
+}
+
+.netx-dot1, .netx-dot2 {
+  width: 60%;
+  height: 60%;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  background-color: #333;
+  border-radius: 100%;
+  
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.netx-dot2 {
+  top: auto;
+  bottom: 0;
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
+@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+.netx-ajax {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: black;
+    z-index: 960000;
+    opacity: .5;
+    height: 100%;
+}
+.netx-ajax .netx-spinner {
+    width: 200px;
+    height: 200px;
+}
