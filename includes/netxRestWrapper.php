@@ -32,8 +32,11 @@ class netxRestWrapper {
      *
      * @return netxRestWrapper
      */
-    public function __construct() {
-        $options = get_option('netx_options');
+    public function __construct($options) {
+        if(!$options) { //if don't pass in options, lets pull from wordpress.
+            $options = get_option('netx_options');
+        }
+
         $netxUsername = $options['netx_username'];
         $netxPassword = $options['netx_password'];
         $netxURI = $options['netx_uri'];

@@ -130,7 +130,7 @@ class netxMediaManagerPluginAdmin {
             $input['netx_uri'] = $tmpURI;
 
             if ($input['netx_base_category_id']) {
-                $input['netx_base_category_path'] = self::getCategoryPath($input['netx_base_category_id']);
+                $input['netx_base_category_path'] = self::getCategoryPath($input['netx_base_category_id'], $input);
             }
         } catch (Exception $e) {
             error_log("netxValidateOptions: " . $e->getMessage());
@@ -163,8 +163,8 @@ class netxMediaManagerPluginAdmin {
      * can look up the path for that category and save it in options
      * as well.
      */
-    public function getCategoryPath($newCatID) {
-        $netx = new netxRestWrapper();
+    public function getCategoryPath($newCatID, $options = null) {
+        $netx = new netxRestWrapper($options);
         $catList = $netx->getCategoryPathList();
         $trans = array_flip($catList);
         $path = $trans[$newCatID];
