@@ -51,6 +51,7 @@ class netxMediaManagerPlugin {
 		unregister_setting('netx_options', 'netx_username');
 		unregister_setting('netx_options', 'netx_password');
 		unregister_setting('netx_options', 'netx_uri');
+		unregister_setting('netx_options', 'netx_uri_protocal');
 		unregister_setting('netx_options', 'netx_base_category_id');
 		unregister_setting('netx_options', 'netx_base_category_path');
 		unregister_setting('netx_options', 'netx_access_token');
