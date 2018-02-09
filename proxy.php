@@ -3,9 +3,6 @@
  * @package NetxWPPlugin
  */
 
-error_reporting(E_ALL);
-ini_set('display_errors','On');
-
 require_once(dirname(__FILE__) . '/../../../wp-blog-header.php');
 require_once(dirname(__FILE__) . '/includes/netxRestWrapper.php');
 
