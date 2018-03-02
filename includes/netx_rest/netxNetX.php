@@ -39,11 +39,11 @@ class netxNetX {
 	 * @param boolean $useHttpBasicAuth true to use HTTP basic auth, false to use the REST login command to log in
 	 * @return netxNetX
 	 */
-	public function __construct($username, $password, $serverURL, $useHttpBasicAuth = false, $userHttps = true) {
+	public function __construct($username, $password, $serverURL, $useHttpBasicAuth = false, $useHttps = true) {
 		if ($useHttpBasicAuth) {
-			$this->connection = netxConnection::ConnectBasicAuth($username, $password, $serverURL, $userHttps);
+			$this->connection = netxConnection::ConnectBasicAuth($username, $password, $serverURL, $useHttps);
 		} else {
-			$this->connection = netxConnection::ConnectLogin($username, $password, $serverURL, $userHttps);
+			$this->connection = netxConnection::ConnectLogin($username, $password, $serverURL, $useHttps);
 		}
 	}
 

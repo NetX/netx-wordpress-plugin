@@ -73,10 +73,10 @@ class netxConnection extends netxRestClient {
 	protected function __construct($baseURI, $useHttps = true) {
 		parent::__construct('login', $this);
 
-		$baseRestUri = ($userHttps ? 'https://' :  'http://') . $baseURI;
+		$baseRestUri = ($useHttps ? 'https://' :  'http://') . $baseURI;
 		$this->restBaseURI = $baseRestUri;
 
-		$baseHref = ($userHttps ? 'https://' :  'http://') . $baseURI;
+		$baseHref = ($useHttps ? 'https://' :  'http://') . $baseURI;
 		$this->restBaseHref = $baseHref;
 
 		$this->http = netxHttp::getInstance();

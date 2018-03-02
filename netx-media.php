@@ -39,7 +39,7 @@ class NetXMediaManager {
 	}
 
 	//Ajax Callback. Returns the netx form loader as html
-	public function ajax_load() {
+    public function ajax_load() {
 		$wrapper = new netxRestWrapper();
 		$netx = $wrapper->getNetx();
 		$cats = $netx->getCategoryTree();
