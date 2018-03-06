@@ -151,7 +151,7 @@ class netxNetX {
 	 * @param int $pageNum page number, or 0 for no paging
 	 * @return array array of netxAssetList objects
 	 */
-	public function getAssetsByCategoryID($catID, $pageNum = 0) {
+    public function getAssetsByCategoryID($catID, $pageNum = 0) {
 		$assetListProc = new netxAssetListProc($this->connection);
 		$assetList = $assetListProc->getAssetsByCategoryID($catID, $pageNum);
 		return $assetList;

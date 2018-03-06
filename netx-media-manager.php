@@ -16,6 +16,8 @@ define('WPNETX_VERSION', '2.1.3');
 define('WPNETX_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('NETX_PLUGIN_URL', WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)));
 
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 
 // Make sure we don't expose any info if called directly
 if (!function_exists('add_action')) {
