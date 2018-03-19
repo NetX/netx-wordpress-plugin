@@ -27,6 +27,12 @@ class NetXMediaManager {
 
         //add our custom html filter.
         add_filter('image_send_to_editor', array($this, 'wrap_image_html'), 10, 8);
+        
+        if (defined('WP_DEBUG_LOG') && true === WP_DEBUG_LOG) {
+            $config = netxConfig::getInstance();
+            $config->setHttpLoggingOn(true);
+            $config->setApiLoggingOn(true);
+        }
     }
 
     public function setup_admin_client_scripts() {

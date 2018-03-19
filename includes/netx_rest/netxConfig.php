@@ -319,8 +319,8 @@ class netxConfig {
 
 	/**
 	 * Set API logging path
-	 *
 	 * @param string $newApiLogPath API logging path
+     *
 	 */
 	public function setApiLogPath($newApiLogPath) {
 		$this->apiLogPath = $newApiLogPath;
