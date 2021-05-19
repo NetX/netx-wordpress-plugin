@@ -19,167 +19,171 @@ require_once(dirname(__FILE__) . '/netxWordpressAssetLoader.php');
  * @package NetxWPPlugin
  */
 class netxRestWrapper {
-	/**
-	 * NetX API object
-	 *
-	 * @var netxNetx NetX API object
-	 * @access private
-	 */
-	private $netx = null;
+    /**
+     * NetX API object
+     *
+     * @var netxNetx NetX API object
+     * @access private
+     */
+    private $netx = null;
 
-	/**
-	 * Constructor
-	 *
-	 * @return netxRestWrapper
-	 */
-	public function __construct() {
-		$options = get_option('netx_options');
-		$netxUsername = $options['netx_username'];
-		$netxPassword = $options['netx_password'];
-		$netxURI = $options['netx_uri'];
-		$this->netx = new netxNetx($netxUsername, $netxPassword, $netxURI, true);
-	}
+    /**
+     * Constructor
+     *
+     * @return netxRestWrapper
+     */
+    public function __construct($options = null) {
+        if(!$options) { //if don't pass in options, lets pull from wordpress.
+            $options = get_option('netx_options');
+        }
 
-	/**
-	 *	Get netx API object
-	 */
-	public function getNetx(){
-		return $this->netx;
-	}
+        $netxUsername = $options['netx_username'];
+        $netxPassword = $options['netx_password'];
+        $netxURI = $options['netx_uri'];
+        $useHttps = $options['netx_uri_protocal'] !== 'http';
+        $this->netx = new netxNetx($netxUsername, $netxPassword, $netxURI, true, $useHttps);
+    }
 
-	/**
-	 * Get list of categories from server
-	 *
-	 * @return array category list
-	 */
-	public function getCategoryPathList() {
-		$list = $this->netx->getCategoryPathList();
-		return $list;
-	}
+    /**
+     *	Get netx API object
+     */
+    public function getNetx(){
+        return $this->netx;
+    }
 
-	/**
-	 * Import a file into DAM
-	 *
-	 * @return string full path to file
-	 */
-	public function importFile($filePath) {
-		$options = get_option('netx_options');
-		$netxCategory = $options['netx_base_category_path'];
-		$config = netxConfig::getInstance();
-		$config->setDeleteAfterImport(false);
-		$asset = $this->netx->fileImport($filePath, $netxCategory);
-		return $asset;
-	}
+    /**
+     * Get list of categories from server
+     *
+     * @return array category list
+     */
+    public function getCategoryPathList() {
+        $list = $this->netx->getCategoryPathList();
+        return $list;
+    }
 
-	public function netxThumbUrl($assetID) {
-		$url = NETX_PLUGIN_URL . 'proxy.php?aid=' . $assetID . '&type=t';
-		return $url;
-	}
+    /**
+     * Import a file into DAM
+     *
+     * @return string full path to file
+     */
+    public function importFile($filePath) {
+        $options = get_option('netx_options');
+        $netxCategory = $options['netx_base_category_path'];
+        $config = netxConfig::getInstance();
+        $config->setDeleteAfterImport(false);
+        $asset = $this->netx->fileImport($filePath, $netxCategory);
+        return $asset;
+    }
 
-	public function netxPreviewUrl($assetID) {
-		$url = NETX_PLUGIN_URL . 'proxy.php?aid=' . $assetID . '&type=p';
-		return $url;
-	}
+    public function netxThumbUrl($assetID) {
+        $url = NETX_PLUGIN_URL . 'proxy.php?aid=' . $assetID . '&type=t';
+        return $url;
+    }
 
-	public function netxZoomUrl($assetID) {
-		$url = NETX_PLUGIN_URL . 'proxy.php?aid=' . $assetID . '&type=z';
-		return $url;
-	}
+    public function netxPreviewUrl($assetID) {
+        $url = NETX_PLUGIN_URL . 'proxy.php?aid=' . $assetID . '&type=p';
+        return $url;
+    }
 
-	public function netxOriginalUrl($assetID) {
-		$url = NETX_PLUGIN_URL . 'proxy.php?aid=' . $assetID . '&type=o';
-		return $url;
-	}
+    public function netxZoomUrl($assetID) {
+        $url = NETX_PLUGIN_URL . 'proxy.php?aid=' . $assetID . '&type=z';
+        return $url;
+    }
 
-	public function getAssetData($assetID, $type, $isAttachment = false) {
-		$conn = $this->netx->getConnection();
-		$proxy = new netxWordpressAssetLoader($conn);
+    public function netxOriginalUrl($assetID) {
+        $url = NETX_PLUGIN_URL . 'proxy.php?aid=' . $assetID . '&type=o';
+        return $url;
+    }
 
-		switch ($type) {
-			case 'o':
-				$proxy->getOriginal($assetID, $isAttachment);
-				break;
-			case 't':
-				$proxy->getThumbnail($assetID, $isAttachment);
-				break;
-			case 'p':
-				$proxy->getPreview($assetID, $isAttachment);
-				break;
-			case 'z':
-				$proxy->getZoom($assetID, $isAttachment);
-				break;
-			default:
-				$proxy->getView($assetID, $type, $isAttachment);
-				break;
-		}
+    public function getAssetData($assetID, $type, $isAttachment = false) {
+        $conn = $this->netx->getConnection();
+        $proxy = new netxWordpressAssetLoader($conn);
 
-		$ret = array();
-		$ret['file'] = $proxy->getUploadFilePath();
-		$ret['url'] = $proxy->getUploadUrlPath();
+        switch ($type) {
+        case 'o':
+            $proxy->getOriginal($assetID, $isAttachment);
+            break;
+        case 't':
+            $proxy->getThumbnail($assetID, $isAttachment);
+            break;
+        case 'p':
+            $proxy->getPreview($assetID, $isAttachment);
+            break;
+        case 'z':
+            $proxy->getZoom($assetID, $isAttachment);
+            break;
+        default:
+            $proxy->getView($assetID, $type, $isAttachment);
+            break;
+        }
 
-		return $ret;
-	}
+        $ret = array();
+        $ret['file'] = $proxy->getUploadFilePath();
+        $ret['url'] = $proxy->getUploadUrlPath();
 
-	public function doProxy($assetID, $type, $isAttachment = false) {
-		$conn = $this->netx->getConnection();
+        return $ret;
+    }
 
-		$options = get_option('netx_options');
-		$cacheDir = $options['netx_cache_path'] . '/';
+    public function doProxy($assetID, $type, $isAttachment = false) {
+        $conn = $this->netx->getConnection();
 
-		$cacheLifetime = $options['netx_cache_lifetime_seconds'];
+        $options = get_option('netx_options');
+        $cacheDir = $options['netx_cache_path'] . '/';
 
-		$proxy = new netxCachingProxy($conn, $cacheDir, $cacheLifetime);
+        $cacheLifetime = $options['netx_cache_lifetime_seconds'];
 
-		switch ($type) {
-			case 'o':
-				$proxy->getOriginal($assetID, $isAttachment);
-				break;
-			case 't':
-				$proxy->getThumbnail($assetID, $isAttachment);
-				break;
-			case 'p':
-				$proxy->getPreview($assetID, $isAttachment);
-				break;
-			case 'z':
-				$proxy->getZoom($assetID, $isAttachment);
-				break;
-			default:
-				$proxy->getView($assetID, $type, $isAttachment);
-				break;
-		}
-	}
+        $proxy = new netxCachingProxy($conn, $cacheDir, $cacheLifetime);
 
-	public function streamAsset($assetID, $type, $isAttachment = false) {
-		$conn = $this->netx->getConnection();
+        switch ($type) {
+        case 'o':
+            $proxy->getOriginal($assetID, $isAttachment);
+            break;
+        case 't':
+            $proxy->getThumbnail($assetID, $isAttachment);
+            break;
+        case 'p':
+            $proxy->getPreview($assetID, $isAttachment);
+            break;
+        case 'z':
+            $proxy->getZoom($assetID, $isAttachment);
+            break;
+        default:
+            $proxy->getView($assetID, $type, $isAttachment);
+            break;
+        }
+    }
 
-		$proxy = new netxAssetProxy($conn);
+    public function streamAsset($assetID, $type, $isAttachment = false) {
+        $conn = $this->netx->getConnection();
 
-		switch ($type) {
-			case 'o':
-				$proxy->getOriginal($assetID, $isAttachment);
-				break;
-			case 't':
-				$proxy->getThumbnail($assetID, $isAttachment);
-				break;
-			case 'p':
-				$proxy->getPreview($assetID, $isAttachment);
-				break;
-			case 'z':
-				$proxy->getZoom($assetID, $isAttachment);
-				break;
-			default:
-				$proxy->getView($assetID, $type, $isAttachment);
-				break;
-		}
+        $proxy = new netxAssetProxy($conn);
 
-		if($proxy->getContentLength == 0) {
-			$filename = dirname(__FILE__) . "/images/netx_nofile.png";
-			$contents = file_get_contents($filename);
-			
-			echo($contents);
-			header("content-type: image/png");
-		}
-	}
+        switch ($type) {
+        case 'o':
+            $proxy->getOriginal($assetID, $isAttachment);
+            break;
+        case 't':
+            $proxy->getThumbnail($assetID, $isAttachment);
+            break;
+        case 'p':
+            $proxy->getPreview($assetID, $isAttachment);
+            break;
+        case 'z':
+            $proxy->getZoom($assetID, $isAttachment);
+            break;
+        default:
+            $proxy->getView($assetID, $type, $isAttachment);
+            break;
+        }
+
+        if($proxy->getContentLength == 0) {
+            $filename = dirname(__FILE__) . "/images/netx_nofile.png";
+            $contents = file_get_contents($filename);
+
+            echo($contents);
+            header("content-type: image/png");
+        }
+    }
 }
 
 ?>

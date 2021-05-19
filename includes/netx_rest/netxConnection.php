@@ -70,13 +70,13 @@ class netxConnection extends netxRestClient {
 	 * @param string $baseURI Base REST URI
 	 * @return netxConnection
 	 */
-	protected function __construct($baseURI) {
+	protected function __construct($baseURI, $useHttps = true) {
 		parent::__construct('login', $this);
 
-		$baseRestUri = 'http://' . $baseURI;
+		$baseRestUri = ($useHttps ? 'https://' :  'http://') . $baseURI;
 		$this->restBaseURI = $baseRestUri;
 
-		$baseHref = 'http://' . $baseURI;
+		$baseHref = ($useHttps ? 'https://' :  'http://') . $baseURI;
 		$this->restBaseHref = $baseHref;
 
 		$this->http = netxHttp::getInstance();
@@ -143,8 +143,8 @@ class netxConnection extends netxRestClient {
 	 * @param string $baseURI base REST URI (i.e. 'poached.netx.net')
 	 * @return netxConnection
 	 */
-	public static function ConnectBasicAuth($username, $password, $baseURI) {
-		$conn = new netxConnection($baseURI);
+	public static function ConnectBasicAuth($username, $password, $baseURI, $useHttps = true) {
+		$conn = new netxConnection($baseURI, $useHttps);
 
 		$conn->doHttpBasicAuthConnect($username, $password);
 
@@ -161,8 +161,8 @@ class netxConnection extends netxRestClient {
 	 * @param string $baseURI base REST URI (i.e. 'poached.netx.net')
 	 * @return netxConnection
 	 */
-	public static function ConnectLogin($username, $password, $baseURI) {
-		$conn = new netxConnection($baseURI);
+	public static function ConnectLogin($username, $password, $baseURI, $useHttps = true) {
+		$conn = new netxConnection($baseURI, $useHttps);
 
 		$conn->doLoginConnect($username, $password);
 

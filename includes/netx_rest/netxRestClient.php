@@ -216,7 +216,8 @@ abstract class netxRestClient {
 		$callString = $this->makeRestCallString($cmdString);
 		$this->log($callString);
 		$uri = $this->makeURI($callString);
-		$xml = $this->connection->getHttp()->get($uri);
+        $xml = $this->connection->getHttp()->get($uri);
+        $this->log($xml);
 		return $xml;
 	}
 

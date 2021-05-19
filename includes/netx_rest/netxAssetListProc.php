@@ -45,10 +45,10 @@ class netxAssetListProc extends netxRestClient {
 	 * @param int $pageNum page number, or 0 for no paging
 	 * @return array array of netxAssetList objects
 	 */
-	public function getAssetsByCategoryID($catID, $pageNum = 0) {
+    public function getAssetsByCategoryID($catID, $pageNum = 0) {
 		$assetList = array();
 		$restCmd = '/category/id/' . $catID . $this->pageString($pageNum);
-		$xml = $this->doCommand($restCmd);
+        $xml = $this->doCommand($restCmd);
 		$assetList = netxBeanFactory::parseAssetListXML($xml);
 		return $assetList;
 	}
@@ -62,7 +62,7 @@ class netxAssetListProc extends netxRestClient {
 	 */
 	public function getAssetsByCategoryPath($catPath, $pageNum = 0) {
 		$assetList = array();
-		$restCmd = '/category/path/' . $catPath . $this->pageString($pageNum);
+        $restCmd = '/category/path/' . $catPath . $this->pageString($pageNum);
 		$xml = $this->doCommand($restCmd);
 		$assetList = netxBeanFactory::parseAssetListXML($xml);
 		return $assetList;

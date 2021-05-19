@@ -39,11 +39,11 @@ class netxNetX {
 	 * @param boolean $useHttpBasicAuth true to use HTTP basic auth, false to use the REST login command to log in
 	 * @return netxNetX
 	 */
-	public function __construct($username, $password, $serverURL, $useHttpBasicAuth = false) {
+	public function __construct($username, $password, $serverURL, $useHttpBasicAuth = false, $useHttps = true) {
 		if ($useHttpBasicAuth) {
-			$this->connection = netxConnection::ConnectBasicAuth($username, $password, $serverURL);
+			$this->connection = netxConnection::ConnectBasicAuth($username, $password, $serverURL, $useHttps);
 		} else {
-			$this->connection = netxConnection::ConnectLogin($username, $password, $serverURL);
+			$this->connection = netxConnection::ConnectLogin($username, $password, $serverURL, $useHttps);
 		}
 	}
 
@@ -151,7 +151,7 @@ class netxNetX {
 	 * @param int $pageNum page number, or 0 for no paging
 	 * @return array array of netxAssetList objects
 	 */
-	public function getAssetsByCategoryID($catID, $pageNum = 0) {
+    public function getAssetsByCategoryID($catID, $pageNum = 0) {
 		$assetListProc = new netxAssetListProc($this->connection);
 		$assetList = $assetListProc->getAssetsByCategoryID($catID, $pageNum);
 		return $assetList;

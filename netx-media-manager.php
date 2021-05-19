@@ -6,16 +6,18 @@
 Plugin Name: NetX Media Manager
 Plugin URI: http://netx.net
 Description: Sync the Wordpress media library with NetX
-Version: 2.1.1
+Version: 2.1.5
 Author: NetX, PNDLM
 Author URI: http://netx.net
 License:
 */
 
-define('WPNETX_VERSION', '2.1.1');
+define('WPNETX_VERSION', '2.1.5');
 define('WPNETX_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('NETX_PLUGIN_URL', WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)));
 
+//error_reporting(-1);
+//ini_set('display_errors', 'On');
 
 // Make sure we don't expose any info if called directly
 if (!function_exists('add_action')) {
@@ -51,6 +53,7 @@ class netxMediaManagerPlugin {
 		unregister_setting('netx_options', 'netx_username');
 		unregister_setting('netx_options', 'netx_password');
 		unregister_setting('netx_options', 'netx_uri');
+		unregister_setting('netx_options', 'netx_uri_protocal');
 		unregister_setting('netx_options', 'netx_base_category_id');
 		unregister_setting('netx_options', 'netx_base_category_path');
 		unregister_setting('netx_options', 'netx_access_token');
